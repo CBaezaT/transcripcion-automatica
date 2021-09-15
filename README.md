@@ -1,4 +1,5 @@
-# Transcripción de audios automática 
+# Transcripción de audios automática  
+_Por Cristian Baeza T_  
 Script de python para transcribir audios largos en español en texto escrito.  
 _Basado_ _en_ _el_ _trabajo_ _de_ _Adbou_ _Rockikz_ _en_ _[PythonCode](thepythoncode.com)_
 
