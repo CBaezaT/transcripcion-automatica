@@ -26,7 +26,7 @@ def get_large_audio_transcription(path):
         # mantiene el silencio por 1 segundo, tambien ajustable
         keep_silence=500,
     )
-    folder_name = "audio-chunks"
+    folder_name = "audio-chunks" # nombre para la carpeta de los trozos de audio
     # crea un directorio para guardar los trozos del audio 
     if not os.path.isdir(folder_name):
         os.mkdir(folder_name)
@@ -34,14 +34,14 @@ def get_large_audio_transcription(path):
     # procesamos cada trozo
     for i, audio_chunk in enumerate(chunks, start=1):
         # exportamos el trozo del audio y lo guardamos enumerado
-        # en la carpeta de nombre `folder_name`.
+        # en la carpeta de nombre `audio-chunks`.
         chunk_filename = os.path.join(folder_name, f"chunk{i}.wav")
         audio_chunk.export(chunk_filename, format="wav")
         # reconocemos el trozo de audio
         with sr.AudioFile(chunk_filename) as source:
             audio_listened = r.record(source)
             # lo intentamos convertir en texto, en este caso establecemos
-            # usar el reconocimiento de google en español
+            # usar el reconocimiento de google en español y entrega en la consola el nombre del trozo y su texto en el formato "chunk1: Hola mundo"
             try:
                 text = r.recognize_google(audio_listened, language="es-ES")
             except sr.UnknownValueError as e:
@@ -50,7 +50,7 @@ def get_large_audio_transcription(path):
                 text = f"{text.capitalize()}. "
                 print(chunk_filename, ":", text)
                 whole_text += text
-    # entrega el texto por todos los trozos de audio
+    # entrega el texto completo de  todos los trozos de audio que se transcribieron
     return whole_text
 
 #seleccionamos el path de nuestro archivo wav
